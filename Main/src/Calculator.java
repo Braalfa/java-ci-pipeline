@@ -6,6 +6,7 @@ public class Calculator {
     private boolean isOperand;
     private boolean firstComa;
     private boolean secondComa;
+    private SimpleCalculator calc;
     public Calculator(){
         firstNumber="";
         secondNumber="";
@@ -70,16 +71,16 @@ public class Calculator {
             }
             switch (operator){
                 case "+":
-                    result = firstNumber + secondNumber;
+                    result = calc.sum(firstNumber, secondNumber);
                     break;
                 case "-":
-                    result= firstNumber - secondNumber;
+                    result=calc.rest(firstNumber, secondNumber);
                     break;
                 case "x":
-                    result= firstNumber*secondNumber;
+                    result= calc.multiplication(firstNumber, secondNumber);
                     break;
                 case "/":
-                    result= firstNumber/secondNumber;
+                    result= calc.divide(firstNumber, secondNumber);
                     break;
                 default:
                     return ;
