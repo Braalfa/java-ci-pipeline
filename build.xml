@@ -371,7 +371,19 @@
   <target name="init" description="Build initialization">
     <!-- Perform any build initialization in this target -->
   </target>
-  
+
+  <target name="test" depends="compile.module.java-ci-pipeline" description="Testing">
+    <junit printsummary="on" haltonfailure="no">
+      <classpath location="Test/src" />
+      <classpath refid="java-ci-pipeline.module.classpath" />
+      <test name="simpleCalculator.tests"
+            haltonfailure="no" todir="Test">
+        <formatter type="plain" />
+        <formatter type="xml" />
+      </test>
+    </junit>
+  </target>
+
   <target name="clean" depends="clean.module.java-ci-pipeline, clean.module.main, clean.module.test" description="cleanup all"/>
   
   <target name="build.modules" depends="init, clean, compile.module.java-ci-pipeline, compile.module.main, compile.module.test" description="build all modules"/>
