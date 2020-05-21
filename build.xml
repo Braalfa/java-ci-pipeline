@@ -374,7 +374,11 @@
   <target name="clean" depends="clean.module.java-ci-pipeline, clean.module.main, clean.module.test" description="cleanup all"/>
   
   <target name="build.modules" depends="init, clean, compile.module.java-ci-pipeline, compile.module.main, compile.module.test" description="build all modules"/>
-  
+
+  <target name="test" depends="compile.module.main" description="test">
+  </target>
+
+
   <target name="init.artifacts">
     <property name="artifacts.temp.dir" value="${basedir}/__artifacts_temp"/>
     <property name="artifact.output.java-ci-pipeline:jar" value="${basedir}/artifacts/java_ci_pipeline_jar"/>
@@ -413,10 +417,11 @@
     <copy todir="${artifact.output.java-ci-pipeline:jar2}">
       <fileset dir="${artifact.temp.output.java-ci-pipeline:jar2}"/>
     </copy>
-    
+
     <!-- Delete temporary files -->
     <delete dir="${artifacts.temp.dir}"/>
   </target>
-  
+
+
   <target name="all" depends="build.modules, build.all.artifacts" description="build all"/>
 </project>
