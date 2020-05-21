@@ -213,7 +213,11 @@
       <include name="src"/>
     </dirset>
   </path>
-  
+
+  <path id="main.module.path">
+    <dirset dir="${module.main.basedir}/Main">
+    </dirset>
+  </path>
   
   <target name="compile.module.main" depends="compile.module.main.production,compile.module.main.tests" description="Compile module Main"/>
   
@@ -372,11 +376,12 @@
     <!-- Perform any build initialization in this target -->
   </target>
 
-  <target name="test" depends="compile.module.java-ci-pipeline" description="Testing">
-    <junit printsummary="on" haltonfailure="no">
+  <target name="test" depends="compile.module.java-ci-pipeline" description="Testing" >
+    <junit printsummary="on" haltonfailure="no" fork="true">
+      <modulepath refid="main.module.sourcepath" />
       <classpath location="Test/src" />
-      <classpath refid="java-ci-pipeline.module.classpath" />
-      <test name="simpleCalculator.tests"
+
+      <test name="simpleCalculatorTests"
             haltonfailure="no" todir="Test">
         <formatter type="plain" />
         <formatter type="xml" />
