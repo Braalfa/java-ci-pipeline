@@ -372,11 +372,11 @@
   </target>
 
   <target name="test" depends="compile.module.java-ci-pipeline" description="Testing" >
-    <junit printsummary="on" haltonfailure="no" fork="true">
-      <modulepath refid="main.module.sourcepath" />
-      <classpath location="Test/src" />
+    <junit printsummary="on" haltonfailure="no" fork="no">
+      <classpath refid="main.module.sourcepath" />
+      <classpath location="${module.test.basedir}" />
       <test name="simpleCalculatorTests"
-            haltonfailure="no" todir="Test">
+            haltonfailure="no" todir="test.module.sourcepath">
         <formatter type="plain" />
         <formatter type="xml" />
       </test>
