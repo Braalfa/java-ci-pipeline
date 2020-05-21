@@ -242,144 +242,22 @@
     <delete dir="${main.testoutput.dir}"/>
   </target>
   
-  
-  <!-- Module Tests -->
-  
-  <dirname property="module.tests.basedir" file="${ant.file}"/>
-  
-  
-  <property name="module.jdk.home.tests" value="${project.jdk.home}"/>
-  <property name="module.jdk.bin.tests" value="${project.jdk.bin}"/>
-  <property name="module.jdk.classpath.tests" value="${project.jdk.classpath}"/>
-  
-  <property name="compiler.args.tests" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
-  
-  <property name="tests.output.dir" value="${module.tests.basedir}/production/Tests"/>
-  <property name="tests.testoutput.dir" value="${module.tests.basedir}/test/Tests"/>
-  
-  <path id="tests.module.bootclasspath">
-    <!-- Paths to be included in compilation bootclasspath -->
-  </path>
-  
-  <path id="tests.module.production.classpath">
-    <path refid="${module.jdk.classpath.tests}"/>
-    <pathelement location="${path.variable.maven_repository}/junit/junit/4.12/junit-4.12.jar"/>
-    <pathelement location="${path.variable.maven_repository}/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar"/>
-    <pathelement location="${path.variable.maven_repository}/org/apiguardian/apiguardian-api/1.0.0/apiguardian-api-1.0.0.jar"/>
-    <pathelement location="${path.variable.maven_repository}/org/junit/jupiter/junit-jupiter-api/5.4.2/junit-jupiter-api-5.4.2.jar"/>
-    <pathelement location="${path.variable.maven_repository}/org/junit/jupiter/junit-jupiter-engine/5.4.2/junit-jupiter-engine-5.4.2.jar"/>
-    <pathelement location="${path.variable.maven_repository}/org/junit/jupiter/junit-jupiter-params/5.4.2/junit-jupiter-params-5.4.2.jar"/>
-    <pathelement location="${path.variable.maven_repository}/org/junit/jupiter/junit-jupiter/5.4.2/junit-jupiter-5.4.2.jar"/>
-    <pathelement location="${path.variable.maven_repository}/org/junit/platform/junit-platform-commons/1.4.2/junit-platform-commons-1.4.2.jar"/>
-    <pathelement location="${path.variable.maven_repository}/org/junit/platform/junit-platform-engine/1.4.2/junit-platform-engine-1.4.2.jar"/>
-    <pathelement location="${path.variable.maven_repository}/org/opentest4j/opentest4j/1.1.1/opentest4j-1.1.1.jar"/>
-    <pathelement location="${main.output.dir}"/>
-  </path>
-  
-  <path id="tests.runtime.production.module.classpath">
-    <pathelement location="${tests.output.dir}"/>
-    <pathelement location="${path.variable.maven_repository}/junit/junit/4.12/junit-4.12.jar"/>
-    <pathelement location="${path.variable.maven_repository}/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar"/>
-    <pathelement location="${path.variable.maven_repository}/org/apiguardian/apiguardian-api/1.0.0/apiguardian-api-1.0.0.jar"/>
-    <pathelement location="${path.variable.maven_repository}/org/junit/jupiter/junit-jupiter-api/5.4.2/junit-jupiter-api-5.4.2.jar"/>
-    <pathelement location="${path.variable.maven_repository}/org/junit/jupiter/junit-jupiter-engine/5.4.2/junit-jupiter-engine-5.4.2.jar"/>
-    <pathelement location="${path.variable.maven_repository}/org/junit/jupiter/junit-jupiter-params/5.4.2/junit-jupiter-params-5.4.2.jar"/>
-    <pathelement location="${path.variable.maven_repository}/org/junit/jupiter/junit-jupiter/5.4.2/junit-jupiter-5.4.2.jar"/>
-    <pathelement location="${path.variable.maven_repository}/org/junit/platform/junit-platform-commons/1.4.2/junit-platform-commons-1.4.2.jar"/>
-    <pathelement location="${path.variable.maven_repository}/org/junit/platform/junit-platform-engine/1.4.2/junit-platform-engine-1.4.2.jar"/>
-    <pathelement location="${path.variable.maven_repository}/org/opentest4j/opentest4j/1.1.1/opentest4j-1.1.1.jar"/>
-    <path refid="main.runtime.production.module.classpath"/>
-  </path>
-  
-  <path id="tests.module.classpath">
-    <path refid="${module.jdk.classpath.tests}"/>
-    <pathelement location="${tests.output.dir}"/>
-    <pathelement location="${path.variable.maven_repository}/junit/junit/4.12/junit-4.12.jar"/>
-    <pathelement location="${path.variable.maven_repository}/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar"/>
-    <pathelement location="${path.variable.maven_repository}/org/apiguardian/apiguardian-api/1.0.0/apiguardian-api-1.0.0.jar"/>
-    <pathelement location="${path.variable.maven_repository}/org/junit/jupiter/junit-jupiter-api/5.4.2/junit-jupiter-api-5.4.2.jar"/>
-    <pathelement location="${path.variable.maven_repository}/org/junit/jupiter/junit-jupiter-engine/5.4.2/junit-jupiter-engine-5.4.2.jar"/>
-    <pathelement location="${path.variable.maven_repository}/org/junit/jupiter/junit-jupiter-params/5.4.2/junit-jupiter-params-5.4.2.jar"/>
-    <pathelement location="${path.variable.maven_repository}/org/junit/jupiter/junit-jupiter/5.4.2/junit-jupiter-5.4.2.jar"/>
-    <pathelement location="${path.variable.maven_repository}/org/junit/platform/junit-platform-commons/1.4.2/junit-platform-commons-1.4.2.jar"/>
-    <pathelement location="${path.variable.maven_repository}/org/junit/platform/junit-platform-engine/1.4.2/junit-platform-engine-1.4.2.jar"/>
-    <pathelement location="${path.variable.maven_repository}/org/opentest4j/opentest4j/1.1.1/opentest4j-1.1.1.jar"/>
-    <pathelement location="${main.testoutput.dir}"/>
-    <pathelement location="${main.output.dir}"/>
-  </path>
-  
-  <path id="tests.runtime.module.classpath">
-    <pathelement location="${tests.testoutput.dir}"/>
-    <pathelement location="${tests.output.dir}"/>
-    <pathelement location="${path.variable.maven_repository}/junit/junit/4.12/junit-4.12.jar"/>
-    <pathelement location="${path.variable.maven_repository}/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar"/>
-    <pathelement location="${path.variable.maven_repository}/org/apiguardian/apiguardian-api/1.0.0/apiguardian-api-1.0.0.jar"/>
-    <pathelement location="${path.variable.maven_repository}/org/junit/jupiter/junit-jupiter-api/5.4.2/junit-jupiter-api-5.4.2.jar"/>
-    <pathelement location="${path.variable.maven_repository}/org/junit/jupiter/junit-jupiter-engine/5.4.2/junit-jupiter-engine-5.4.2.jar"/>
-    <pathelement location="${path.variable.maven_repository}/org/junit/jupiter/junit-jupiter-params/5.4.2/junit-jupiter-params-5.4.2.jar"/>
-    <pathelement location="${path.variable.maven_repository}/org/junit/jupiter/junit-jupiter/5.4.2/junit-jupiter-5.4.2.jar"/>
-    <pathelement location="${path.variable.maven_repository}/org/junit/platform/junit-platform-commons/1.4.2/junit-platform-commons-1.4.2.jar"/>
-    <pathelement location="${path.variable.maven_repository}/org/junit/platform/junit-platform-engine/1.4.2/junit-platform-engine-1.4.2.jar"/>
-    <pathelement location="${path.variable.maven_repository}/org/opentest4j/opentest4j/1.1.1/opentest4j-1.1.1.jar"/>
-    <path refid="main.runtime.module.classpath"/>
-  </path>
-  
-  
-  <patternset id="excluded.from.module.tests">
-    <patternset refid="ignored.files"/>
-  </patternset>
-  
-  <patternset id="excluded.from.compilation.tests">
-    <patternset refid="excluded.from.module.tests"/>
-  </patternset>
-  
-  <path id="tests.module.sourcepath">
-    <dirset dir="${module.tests.basedir}/Tests">
-      <include name="src"/>
-    </dirset>
-  </path>
-  
-  
-  <target name="compile.module.tests" depends="compile.module.tests.production,compile.module.tests.tests" description="Compile module Tests"/>
-  
-  <target name="compile.module.tests.production" depends="register.custom.compilers,compile.module.main" description="Compile module Tests; production classes">
-    <mkdir dir="${tests.output.dir}"/>
-    <javac2 destdir="${tests.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.tests}/javac">
-      <compilerarg line="${compiler.args.tests}"/>
-      <bootclasspath refid="tests.module.bootclasspath"/>
-      <classpath refid="tests.module.production.classpath"/>
-      <src refid="tests.module.sourcepath"/>
-      <patternset refid="excluded.from.compilation.tests"/>
-    </javac2>
-    
-    <copy todir="${tests.output.dir}">
-      <fileset dir="${module.tests.basedir}/Tests/src">
-        <patternset refid="compiler.resources"/>
-        <type type="file"/>
-      </fileset>
-    </copy>
-  </target>
-  
-  <target name="compile.module.tests.tests" depends="register.custom.compilers,compile.module.tests.production" description="compile module Tests; test classes" unless="skip.tests"/>
-  
-  <target name="clean.module.tests" description="cleanup module">
-    <delete dir="${tests.output.dir}"/>
-    <delete dir="${tests.testoutput.dir}"/>
-  </target>
-  
   <target name="init" description="Build initialization">
     <!-- Perform any build initialization in this target -->
   </target>
   
-  <target name="clean" depends="clean.module.java-ci-pipeline, clean.module.main, clean.module.tests" description="cleanup all"/>
+  <target name="clean" depends="clean.module.java-ci-pipeline, clean.module.main" description="cleanup all"/>
   
-  <target name="build.modules" depends="init, clean, compile.module.java-ci-pipeline, compile.module.main, compile.module.tests" description="build all modules"/>
+  <target name="build.modules" depends="init, clean, compile.module.java-ci-pipeline, compile.module.main" description="build all modules"/>
   
   <target name="init.artifacts">
     <property name="artifacts.temp.dir" value="${basedir}/__artifacts_temp"/>
     <property name="artifact.output.java-ci-pipeline:jar" value="${basedir}/artifacts/java_ci_pipeline_jar"/>
+    <property name="artifact.output.java-ci-pipeline:jar2" value="${basedir}/artifacts/java_ci_pipeline_jar2"/>
     <mkdir dir="${artifacts.temp.dir}"/>
     <property name="temp.jar.path.java-ci-pipeline.jar" value="${artifacts.temp.dir}/java-ci-pipeline.jar"/>
+    <property name="temp.jar.path.java-ci-pipeline.jar2" value="${artifacts.temp.dir}/1/java-ci-pipeline.jar"/>
+    <mkdir dir="${artifacts.temp.dir}/1"/>
   </target>
   
   <target name="artifact.java-ci-pipeline:jar" depends="init.artifacts, compile.module.main" description="Build &#39;java-ci-pipeline:jar&#39; artifact">
@@ -392,10 +270,23 @@
     <copy file="${temp.jar.path.java-ci-pipeline.jar}" tofile="${artifact.temp.output.java-ci-pipeline:jar}/java-ci-pipeline.jar"/>
   </target>
   
-  <target name="build.all.artifacts" depends="artifact.java-ci-pipeline:jar" description="Build all artifacts">
+  <target name="artifact.java-ci-pipeline:jar2" depends="init.artifacts" description="Build &#39;java-ci-pipeline:jar2&#39; artifact">
+    <property name="artifact.temp.output.java-ci-pipeline:jar2" value="${artifacts.temp.dir}/java_ci_pipeline_jar2"/>
+    <mkdir dir="${artifact.temp.output.java-ci-pipeline:jar2}"/>
+    <jar destfile="${temp.jar.path.java-ci-pipeline.jar2}" duplicate="preserve" filesetmanifest="mergewithoutmain">
+      <zipfileset file="${basedir}/META-INF/MANIFEST.MF" prefix="META-INF"/>
+    </jar>
+    <copy file="${temp.jar.path.java-ci-pipeline.jar2}" tofile="${artifact.temp.output.java-ci-pipeline:jar2}/java-ci-pipeline.jar"/>
+  </target>
+  
+  <target name="build.all.artifacts" depends="artifact.java-ci-pipeline:jar, artifact.java-ci-pipeline:jar2" description="Build all artifacts">
     <mkdir dir="${artifact.output.java-ci-pipeline:jar}"/>
     <copy todir="${artifact.output.java-ci-pipeline:jar}">
       <fileset dir="${artifact.temp.output.java-ci-pipeline:jar}"/>
+    </copy>
+    <mkdir dir="${artifact.output.java-ci-pipeline:jar2}"/>
+    <copy todir="${artifact.output.java-ci-pipeline:jar2}">
+      <fileset dir="${artifact.temp.output.java-ci-pipeline:jar2}"/>
     </copy>
     
     <!-- Delete temporary files -->
