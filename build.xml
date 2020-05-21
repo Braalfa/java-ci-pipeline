@@ -95,8 +95,19 @@
       <include name="jdom.jar"/>
       <include name="asm-all*.jar"/>
       <include name="forms-*.jar"/>
+      <include name="junit.jar"/>
     </fileset>
   </path>
+
+  <path id="test.classpath">
+    <fileset dir="${javac2.home}">
+      <include name="junit.jar"/>
+    </fileset>
+    <dirset dir="Test/src">
+      <include name="Tests"/>
+    </dirset>
+  </path>
+
   <target name="register.custom.compilers">
     <taskdef name="javac2" classname="com.intellij.ant.Javac2" classpathref="javac2.classpath"/>
   </target>
@@ -373,10 +384,9 @@
 
   <target name="test" depends="compile.module.java-ci-pipeline" description="Testing" >
     <junit printsummary="on" haltonfailure="no" fork="no">
-      <classpath refid="main.module.sourcepath" />
-      <classpath location="${module.test.basedir}" />
-      <test name="simpleCalculatorTests"
-            haltonfailure="no" todir="test.module.sourcepath">
+      <classpath refid="test.classpath" />
+      <test name="Tests"
+            haltonfailure="no" todir="Test" >
         <formatter type="plain" />
         <formatter type="xml" />
       </test>
