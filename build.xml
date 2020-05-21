@@ -361,7 +361,10 @@
   </target>
   
   <target name="compile.module.test.tests" depends="register.custom.compilers,compile.module.test.production" description="compile module Test; test classes" unless="skip.tests"/>
-  
+
+  <target name="test" depends="compile.module.test.tests" description="test"/>
+
+
   <target name="clean.module.test" description="cleanup module">
     <delete dir="${test.output.dir}"/>
     <delete dir="${test.testoutput.dir}"/>
