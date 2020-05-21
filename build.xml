@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="java-ci-pipeline" default="all">
+  
+  
+  <property file="build.properties"/>
+  <!-- Uncomment the following property if no tests compilation is needed -->
+  <!-- 
+  <property name="skip.tests" value="true"/>
+   -->
+  
+  <!-- Compiler options -->
+  
+  <property name="compiler.debug" value="on"/>
+  <property name="compiler.generate.no.warnings" value="off"/>
+  <property name="compiler.args" value=""/>
+  <property name="compiler.max.memory" value="700m"/>
+  <patternset id="ignored.files">
+    <exclude name="**/*.hprof/**"/>
+    <exclude name="**/*.pyc/**"/>
+    <exclude name="**/*.pyo/**"/>
+    <exclude name="**/*.rbc/**"/>
+    <exclude name="**/*.yarb/**"/>
+    <exclude name="**/*~/**"/>
+    <exclude name="**/.DS_Store/**"/>
+    <exclude name="**/.git/**"/>
+    <exclude name="**/.hg/**"/>
+    <exclude name="**/.svn/**"/>
+    <exclude name="**/CVS/**"/>
+    <exclude name="**/__pycache__/**"/>
+    <exclude name="**/_svn/**"/>
+    <exclude name="**/vssver.scc/**"/>
+    <exclude name="**/vssver2.scc/**"/>
+  </patternset>
+  <patternset id="library.patterns">
+    <include name="*.war"/>
+    <include name="*.swc"/>
+    <include name="*.zip"/>
+    <include name="*.egg"/>
+    <include name="*.ear"/>
+    <include name="*.ane"/>
+    <include name="*.jar"/>
+    <include name="*.klib"/>
+  </patternset>
+  <patternset id="compiler.resources">
+    <exclude name="**/?*.java"/>
+    <exclude name="**/?*.form"/>
+    <exclude name="**/?*.class"/>
+    <exclude name="**/?*.groovy"/>
+    <exclude name="**/?*.scala"/>
+    <exclude name="**/?*.flex"/>
+    <exclude name="**/?*.kt"/>
+    <exclude name="**/?*.clj"/>
+    <exclude name="**/?*.aj"/>
+  </patternset>
+  
+  <!-- JDK definitions -->
+  
+  <property name="jdk.bin.1.8" value="${jdk.home.1.8}/bin"/>
+  <path id="jdk.classpath.1.8">
+    <fileset dir="${jdk.home.1.8}">
+      <include name="jre/lib/charsets.jar"/>
+      <include name="jre/lib/deploy.jar"/>
+      <include name="jre/lib/ext/access-bridge-64.jar"/>
+      <include name="jre/lib/ext/cldrdata.jar"/>
+      <include name="jre/lib/ext/dnsns.jar"/>
+      <include name="jre/lib/ext/jaccess.jar"/>
+      <include name="jre/lib/ext/jfxrt.jar"/>
+      <include name="jre/lib/ext/localedata.jar"/>
+      <include name="jre/lib/ext/nashorn.jar"/>
+      <include name="jre/lib/ext/sunec.jar"/>
+      <include name="jre/lib/ext/sunjce_provider.jar"/>
+      <include name="jre/lib/ext/sunmscapi.jar"/>
+      <include name="jre/lib/ext/sunpkcs11.jar"/>
+      <include name="jre/lib/ext/zipfs.jar"/>
+      <include name="jre/lib/javaws.jar"/>
+      <include name="jre/lib/jce.jar"/>
+      <include name="jre/lib/jfr.jar"/>
+      <include name="jre/lib/jfxswt.jar"/>
+      <include name="jre/lib/jsse.jar"/>
+      <include name="jre/lib/management-agent.jar"/>
+      <include name="jre/lib/plugin.jar"/>
+      <include name="jre/lib/resources.jar"/>
+      <include name="jre/lib/rt.jar"/>
+    </fileset>
+  </path>
+  
+  <property name="project.jdk.home" value="${jdk.home.1.8}"/>
+  <property name="project.jdk.bin" value="${jdk.bin.1.8}"/>
+  <property name="project.jdk.classpath" value="jdk.classpath.1.8"/>
+  <!-- Register Custom Compiler Taskdefs -->
+  <property name="javac2.home" value="${idea.home}/lib"/>
+  <path id="javac2.classpath">
+    <fileset dir="${javac2.home}">
+      <include name="javac2.jar"/>
+      <include name="jdom.jar"/>
+      <include name="asm-all*.jar"/>
+      <include name="forms-*.jar"/>
+    </fileset>
+  </path>
+  <target name="register.custom.compilers">
+    <taskdef name="javac2" classname="com.intellij.ant.Javac2" classpathref="javac2.classpath"/>
+    <taskdef name="instrumentIdeaExtensions" classname="com.intellij.ant.InstrumentIdeaExtensions" classpathref="javac2.classpath"/>
+  </target>
+  
+  <!-- Modules -->
+  
+  
+  <!-- Module java-ci-pipeline -->
+  
+  <dirname property="module.java-ci-pipeline.basedir" file="${ant.file}"/>
+  
+  
+  <property name="module.jdk.home.java-ci-pipeline" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.java-ci-pipeline" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.java-ci-pipeline" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.java-ci-pipeline" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="java-ci-pipeline.output.dir" value="${module.java-ci-pipeline.basedir}/production/java-ci-pipeline"/>
+  <property name="java-ci-pipeline.testoutput.dir" value="${module.java-ci-pipeline.basedir}/test/java-ci-pipeline"/>
+  
+  <path id="java-ci-pipeline.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="java-ci-pipeline.module.production.classpath">
+    <path refid="${module.jdk.classpath.java-ci-pipeline}"/>
+  </path>
+  
+  <path id="java-ci-pipeline.runtime.production.module.classpath">
+    <pathelement location="${java-ci-pipeline.output.dir}"/>
+  </path>
+  
+  <path id="java-ci-pipeline.module.classpath">
+    <path refid="${module.jdk.classpath.java-ci-pipeline}"/>
+    <pathelement location="${java-ci-pipeline.output.dir}"/>
+  </path>
+  
+  <path id="java-ci-pipeline.runtime.module.classpath">
+    <pathelement location="${java-ci-pipeline.testoutput.dir}"/>
+    <pathelement location="${java-ci-pipeline.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.java-ci-pipeline">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.java-ci-pipeline">
+    <patternset refid="excluded.from.module.java-ci-pipeline"/>
+  </patternset>
+  
+  
+  <target name="compile.module.java-ci-pipeline" depends="compile.module.java-ci-pipeline.production,compile.module.java-ci-pipeline.tests" description="Compile module java-ci-pipeline"/>
+  
+  <target name="compile.module.java-ci-pipeline.production" depends="register.custom.compilers" description="Compile module java-ci-pipeline; production classes"/>
+  
+  <target name="compile.module.java-ci-pipeline.tests" depends="register.custom.compilers,compile.module.java-ci-pipeline.production" description="compile module java-ci-pipeline; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.java-ci-pipeline" description="cleanup module">
+    <delete dir="${java-ci-pipeline.output.dir}"/>
+    <delete dir="${java-ci-pipeline.testoutput.dir}"/>
+  </target>
+  
+  
+  <!-- Module Main -->
+  
+  <dirname property="module.main.basedir" file="${ant.file}"/>
+  
+  
+  <property name="module.jdk.home.main" value="${jdk.home.1.8}"/>
+  <property name="module.jdk.bin.main" value="${jdk.bin.1.8}"/>
+  <property name="module.jdk.classpath.main" value="jdk.classpath.1.8"/>
+  
+  <property name="compiler.args.main" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="main.output.dir" value="${module.main.basedir}/production/Main"/>
+  <property name="main.testoutput.dir" value="${module.main.basedir}/test/Main"/>
+  
+  <path id="main.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="main.module.production.classpath">
+    <path refid="${module.jdk.classpath.main}"/>
+  </path>
+  
+  <path id="main.runtime.production.module.classpath">
+    <pathelement location="${main.output.dir}"/>
+  </path>
+  
+  <path id="main.module.classpath">
+    <path refid="${module.jdk.classpath.main}"/>
+    <pathelement location="${main.output.dir}"/>
+  </path>
+  
+  <path id="main.runtime.module.classpath">
+    <pathelement location="${main.testoutput.dir}"/>
+    <pathelement location="${main.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.main">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.main">
+    <patternset refid="excluded.from.module.main"/>
+  </patternset>
+  
+  <path id="main.module.sourcepath">
+    <dirset dir="${module.main.basedir}/Main">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.main" depends="compile.module.main.production,compile.module.main.tests" description="Compile module Main"/>
+  
+  <target name="compile.module.main.production" depends="register.custom.compilers" description="Compile module Main; production classes">
+    <mkdir dir="${main.output.dir}"/>
+    <javac2 destdir="${main.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.main}/javac">
+      <compilerarg line="${compiler.args.main}"/>
+      <bootclasspath refid="main.module.bootclasspath"/>
+      <classpath refid="main.module.production.classpath"/>
+      <src refid="main.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.main"/>
+    </javac2>
+    
+    <copy todir="${main.output.dir}">
+      <fileset dir="${module.main.basedir}/Main/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.main.tests" depends="register.custom.compilers,compile.module.main.production" description="compile module Main; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.main" description="cleanup module">
+    <delete dir="${main.output.dir}"/>
+    <delete dir="${main.testoutput.dir}"/>
+  </target>
+  
+  
+  <!-- Module Tests -->
+  
+  <dirname property="module.tests.basedir" file="${ant.file}"/>
+  
+  
+  <property name="module.jdk.home.tests" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.tests" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.tests" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.tests" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="tests.output.dir" value="${module.tests.basedir}/production/Tests"/>
+  <property name="tests.testoutput.dir" value="${module.tests.basedir}/test/Tests"/>
+  
+  <path id="tests.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="tests.module.production.classpath">
+    <path refid="${module.jdk.classpath.tests}"/>
+    <pathelement location="${path.variable.maven_repository}/junit/junit/4.12/junit-4.12.jar"/>
+    <pathelement location="${path.variable.maven_repository}/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar"/>
+    <pathelement location="${path.variable.maven_repository}/org/apiguardian/apiguardian-api/1.0.0/apiguardian-api-1.0.0.jar"/>
+    <pathelement location="${path.variable.maven_repository}/org/junit/jupiter/junit-jupiter-api/5.4.2/junit-jupiter-api-5.4.2.jar"/>
+    <pathelement location="${path.variable.maven_repository}/org/junit/jupiter/junit-jupiter-engine/5.4.2/junit-jupiter-engine-5.4.2.jar"/>
+    <pathelement location="${path.variable.maven_repository}/org/junit/jupiter/junit-jupiter-params/5.4.2/junit-jupiter-params-5.4.2.jar"/>
+    <pathelement location="${path.variable.maven_repository}/org/junit/jupiter/junit-jupiter/5.4.2/junit-jupiter-5.4.2.jar"/>
+    <pathelement location="${path.variable.maven_repository}/org/junit/platform/junit-platform-commons/1.4.2/junit-platform-commons-1.4.2.jar"/>
+    <pathelement location="${path.variable.maven_repository}/org/junit/platform/junit-platform-engine/1.4.2/junit-platform-engine-1.4.2.jar"/>
+    <pathelement location="${path.variable.maven_repository}/org/opentest4j/opentest4j/1.1.1/opentest4j-1.1.1.jar"/>
+    <pathelement location="${main.output.dir}"/>
+  </path>
+  
+  <path id="tests.runtime.production.module.classpath">
+    <pathelement location="${tests.output.dir}"/>
+    <pathelement location="${path.variable.maven_repository}/junit/junit/4.12/junit-4.12.jar"/>
+    <pathelement location="${path.variable.maven_repository}/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar"/>
+    <pathelement location="${path.variable.maven_repository}/org/apiguardian/apiguardian-api/1.0.0/apiguardian-api-1.0.0.jar"/>
+    <pathelement location="${path.variable.maven_repository}/org/junit/jupiter/junit-jupiter-api/5.4.2/junit-jupiter-api-5.4.2.jar"/>
+    <pathelement location="${path.variable.maven_repository}/org/junit/jupiter/junit-jupiter-engine/5.4.2/junit-jupiter-engine-5.4.2.jar"/>
+    <pathelement location="${path.variable.maven_repository}/org/junit/jupiter/junit-jupiter-params/5.4.2/junit-jupiter-params-5.4.2.jar"/>
+    <pathelement location="${path.variable.maven_repository}/org/junit/jupiter/junit-jupiter/5.4.2/junit-jupiter-5.4.2.jar"/>
+    <pathelement location="${path.variable.maven_repository}/org/junit/platform/junit-platform-commons/1.4.2/junit-platform-commons-1.4.2.jar"/>
+    <pathelement location="${path.variable.maven_repository}/org/junit/platform/junit-platform-engine/1.4.2/junit-platform-engine-1.4.2.jar"/>
+    <pathelement location="${path.variable.maven_repository}/org/opentest4j/opentest4j/1.1.1/opentest4j-1.1.1.jar"/>
+    <path refid="main.runtime.production.module.classpath"/>
+  </path>
+  
+  <path id="tests.module.classpath">
+    <path refid="${module.jdk.classpath.tests}"/>
+    <pathelement location="${tests.output.dir}"/>
+    <pathelement location="${path.variable.maven_repository}/junit/junit/4.12/junit-4.12.jar"/>
+    <pathelement location="${path.variable.maven_repository}/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar"/>
+    <pathelement location="${path.variable.maven_repository}/org/apiguardian/apiguardian-api/1.0.0/apiguardian-api-1.0.0.jar"/>
+    <pathelement location="${path.variable.maven_repository}/org/junit/jupiter/junit-jupiter-api/5.4.2/junit-jupiter-api-5.4.2.jar"/>
+    <pathelement location="${path.variable.maven_repository}/org/junit/jupiter/junit-jupiter-engine/5.4.2/junit-jupiter-engine-5.4.2.jar"/>
+    <pathelement location="${path.variable.maven_repository}/org/junit/jupiter/junit-jupiter-params/5.4.2/junit-jupiter-params-5.4.2.jar"/>
+    <pathelement location="${path.variable.maven_repository}/org/junit/jupiter/junit-jupiter/5.4.2/junit-jupiter-5.4.2.jar"/>
+    <pathelement location="${path.variable.maven_repository}/org/junit/platform/junit-platform-commons/1.4.2/junit-platform-commons-1.4.2.jar"/>
+    <pathelement location="${path.variable.maven_repository}/org/junit/platform/junit-platform-engine/1.4.2/junit-platform-engine-1.4.2.jar"/>
+    <pathelement location="${path.variable.maven_repository}/org/opentest4j/opentest4j/1.1.1/opentest4j-1.1.1.jar"/>
+    <pathelement location="${main.testoutput.dir}"/>
+    <pathelement location="${main.output.dir}"/>
+  </path>
+  
+  <path id="tests.runtime.module.classpath">
+    <pathelement location="${tests.testoutput.dir}"/>
+    <pathelement location="${tests.output.dir}"/>
+    <pathelement location="${path.variable.maven_repository}/junit/junit/4.12/junit-4.12.jar"/>
+    <pathelement location="${path.variable.maven_repository}/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar"/>
+    <pathelement location="${path.variable.maven_repository}/org/apiguardian/apiguardian-api/1.0.0/apiguardian-api-1.0.0.jar"/>
+    <pathelement location="${path.variable.maven_repository}/org/junit/jupiter/junit-jupiter-api/5.4.2/junit-jupiter-api-5.4.2.jar"/>
+    <pathelement location="${path.variable.maven_repository}/org/junit/jupiter/junit-jupiter-engine/5.4.2/junit-jupiter-engine-5.4.2.jar"/>
+    <pathelement location="${path.variable.maven_repository}/org/junit/jupiter/junit-jupiter-params/5.4.2/junit-jupiter-params-5.4.2.jar"/>
+    <pathelement location="${path.variable.maven_repository}/org/junit/jupiter/junit-jupiter/5.4.2/junit-jupiter-5.4.2.jar"/>
+    <pathelement location="${path.variable.maven_repository}/org/junit/platform/junit-platform-commons/1.4.2/junit-platform-commons-1.4.2.jar"/>
+    <pathelement location="${path.variable.maven_repository}/org/junit/platform/junit-platform-engine/1.4.2/junit-platform-engine-1.4.2.jar"/>
+    <pathelement location="${path.variable.maven_repository}/org/opentest4j/opentest4j/1.1.1/opentest4j-1.1.1.jar"/>
+    <path refid="main.runtime.module.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.tests">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.tests">
+    <patternset refid="excluded.from.module.tests"/>
+  </patternset>
+  
+  <path id="tests.module.sourcepath">
+    <dirset dir="${module.tests.basedir}/Tests">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.tests" depends="compile.module.tests.production,compile.module.tests.tests" description="Compile module Tests"/>
+  
+  <target name="compile.module.tests.production" depends="register.custom.compilers,compile.module.main" description="Compile module Tests; production classes">
+    <mkdir dir="${tests.output.dir}"/>
+    <javac2 destdir="${tests.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.tests}/javac">
+      <compilerarg line="${compiler.args.tests}"/>
+      <bootclasspath refid="tests.module.bootclasspath"/>
+      <classpath refid="tests.module.production.classpath"/>
+      <src refid="tests.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.tests"/>
+    </javac2>
+    
+    <copy todir="${tests.output.dir}">
+      <fileset dir="${module.tests.basedir}/Tests/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.tests.tests" depends="register.custom.compilers,compile.module.tests.production" description="compile module Tests; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.tests" description="cleanup module">
+    <delete dir="${tests.output.dir}"/>
+    <delete dir="${tests.testoutput.dir}"/>
+  </target>
+  
+  <target name="init" description="Build initialization">
+    <!-- Perform any build initialization in this target -->
+  </target>
+  
+  <target name="clean" depends="clean.module.java-ci-pipeline, clean.module.main, clean.module.tests" description="cleanup all"/>
+  
+  <target name="build.modules" depends="init, clean, compile.module.java-ci-pipeline, compile.module.main, compile.module.tests" description="build all modules"/>
+  
+  <target name="init.artifacts">
+    <property name="artifacts.temp.dir" value="${basedir}/__artifacts_temp"/>
+    <property name="artifact.output.java-ci-pipeline:jar" value="${basedir}/artifacts/java_ci_pipeline_jar"/>
+    <mkdir dir="${artifacts.temp.dir}"/>
+    <property name="temp.jar.path.java-ci-pipeline.jar" value="${artifacts.temp.dir}/java-ci-pipeline.jar"/>
+  </target>
+  
+  <target name="artifact.java-ci-pipeline:jar" depends="init.artifacts, compile.module.main" description="Build &#39;java-ci-pipeline:jar&#39; artifact">
+    <property name="artifact.temp.output.java-ci-pipeline:jar" value="${artifacts.temp.dir}/java_ci_pipeline_jar"/>
+    <mkdir dir="${artifact.temp.output.java-ci-pipeline:jar}"/>
+    <jar destfile="${temp.jar.path.java-ci-pipeline.jar}" duplicate="preserve" filesetmanifest="mergewithoutmain">
+      <zipfileset file="${basedir}/META-INF/MANIFEST.MF" prefix="META-INF"/>
+      <zipfileset dir="${main.output.dir}"/>
+    </jar>
+    <copy file="${temp.jar.path.java-ci-pipeline.jar}" tofile="${artifact.temp.output.java-ci-pipeline:jar}/java-ci-pipeline.jar"/>
+  </target>
+  
+  <target name="build.all.artifacts" depends="artifact.java-ci-pipeline:jar" description="Build all artifacts">
+    <mkdir dir="${artifact.output.java-ci-pipeline:jar}"/>
+    <copy todir="${artifact.output.java-ci-pipeline:jar}">
+      <fileset dir="${artifact.temp.output.java-ci-pipeline:jar}"/>
+    </copy>
+    
+    <!-- Delete temporary files -->
+    <delete dir="${artifacts.temp.dir}"/>
+  </target>
+  
+  <target name="all" depends="build.modules, build.all.artifacts" description="build all"/>
+</project>
