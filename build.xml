@@ -288,7 +288,7 @@
     <pathelement location="${path.variable.maven_repository}/org/junit/platform/junit-platform-commons/1.4.2/junit-platform-commons-1.4.2.jar"/>
     <pathelement location="${path.variable.maven_repository}/org/junit/platform/junit-platform-engine/1.4.2/junit-platform-engine-1.4.2.jar"/>
     <pathelement location="${path.variable.maven_repository}/org/opentest4j/opentest4j/1.1.1/opentest4j-1.1.1.jar"/>
-    <path refid="main.runtime.production.module.classpath"/>
+    <pathelement location="${main.output.dir}"/>
   </path>
   
   <path id="test.module.classpath">
@@ -321,7 +321,8 @@
     <pathelement location="${path.variable.maven_repository}/org/junit/platform/junit-platform-commons/1.4.2/junit-platform-commons-1.4.2.jar"/>
     <pathelement location="${path.variable.maven_repository}/org/junit/platform/junit-platform-engine/1.4.2/junit-platform-engine-1.4.2.jar"/>
     <pathelement location="${path.variable.maven_repository}/org/opentest4j/opentest4j/1.1.1/opentest4j-1.1.1.jar"/>
-    <path refid="main.runtime.module.classpath"/>
+    <pathelement location="${main.testoutput.dir}"/>
+    <pathelement location="${main.output.dir}"/>
   </path>
   
   
@@ -361,10 +362,7 @@
   </target>
   
   <target name="compile.module.test.tests" depends="register.custom.compilers,compile.module.test.production" description="compile module Test; test classes" unless="skip.tests"/>
-
-  <target name="test" depends="compile.module.test.tests" description="test"/>
-
-
+  
   <target name="clean.module.test" description="cleanup module">
     <delete dir="${test.output.dir}"/>
     <delete dir="${test.testoutput.dir}"/>
