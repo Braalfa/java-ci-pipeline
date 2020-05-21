@@ -375,48 +375,5 @@
   
   <target name="build.modules" depends="init, clean, compile.module.java-ci-pipeline, compile.module.main, compile.module.test" description="build all modules"/>
   
-  <target name="init.artifacts">
-    <property name="artifacts.temp.dir" value="${basedir}/__artifacts_temp"/>
-    <property name="artifact.output.java-ci-pipeline:jar" value="${basedir}/artifacts/java_ci_pipeline_jar"/>
-    <property name="artifact.output.java-ci-pipeline:jar2" value="${basedir}/artifacts/java_ci_pipeline_jar2"/>
-    <mkdir dir="${artifacts.temp.dir}"/>
-    <property name="temp.jar.path.java-ci-pipeline.jar" value="${artifacts.temp.dir}/java-ci-pipeline.jar"/>
-    <property name="temp.jar.path.java-ci-pipeline.jar2" value="${artifacts.temp.dir}/1/java-ci-pipeline.jar"/>
-    <mkdir dir="${artifacts.temp.dir}/1"/>
-  </target>
-  
-  <target name="artifact.java-ci-pipeline:jar" depends="init.artifacts, compile.module.main" description="Build &#39;java-ci-pipeline:jar&#39; artifact">
-    <property name="artifact.temp.output.java-ci-pipeline:jar" value="${artifacts.temp.dir}/java_ci_pipeline_jar"/>
-    <mkdir dir="${artifact.temp.output.java-ci-pipeline:jar}"/>
-    <jar destfile="${temp.jar.path.java-ci-pipeline.jar}" duplicate="preserve" filesetmanifest="mergewithoutmain">
-      <zipfileset file="${basedir}/META-INF/MANIFEST.MF" prefix="META-INF"/>
-      <zipfileset dir="${main.output.dir}"/>
-    </jar>
-    <copy file="${temp.jar.path.java-ci-pipeline.jar}" tofile="${artifact.temp.output.java-ci-pipeline:jar}/java-ci-pipeline.jar"/>
-  </target>
-  
-  <target name="artifact.java-ci-pipeline:jar2" depends="init.artifacts" description="Build &#39;java-ci-pipeline:jar2&#39; artifact">
-    <property name="artifact.temp.output.java-ci-pipeline:jar2" value="${artifacts.temp.dir}/java_ci_pipeline_jar2"/>
-    <mkdir dir="${artifact.temp.output.java-ci-pipeline:jar2}"/>
-    <jar destfile="${temp.jar.path.java-ci-pipeline.jar2}" duplicate="preserve" filesetmanifest="mergewithoutmain">
-      <zipfileset file="${basedir}/META-INF/MANIFEST.MF" prefix="META-INF"/>
-    </jar>
-    <copy file="${temp.jar.path.java-ci-pipeline.jar2}" tofile="${artifact.temp.output.java-ci-pipeline:jar2}/java-ci-pipeline.jar"/>
-  </target>
-  
-  <target name="build.all.artifacts" depends="artifact.java-ci-pipeline:jar, artifact.java-ci-pipeline:jar2" description="Build all artifacts">
-    <mkdir dir="${artifact.output.java-ci-pipeline:jar}"/>
-    <copy todir="${artifact.output.java-ci-pipeline:jar}">
-      <fileset dir="${artifact.temp.output.java-ci-pipeline:jar}"/>
-    </copy>
-    <mkdir dir="${artifact.output.java-ci-pipeline:jar2}"/>
-    <copy todir="${artifact.output.java-ci-pipeline:jar2}">
-      <fileset dir="${artifact.temp.output.java-ci-pipeline:jar2}"/>
-    </copy>
-    
-    <!-- Delete temporary files -->
-    <delete dir="${artifacts.temp.dir}"/>
-  </target>
-  
-  <target name="all" depends="build.modules, build.all.artifacts" description="build all"/>
+  <target name="all" depends="build.modules" description="build all"/>
 </project>
