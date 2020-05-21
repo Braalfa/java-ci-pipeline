@@ -380,7 +380,6 @@
     <junit printsummary="on" haltonfailure="no" fork="true">
       <modulepath refid="main.module.sourcepath" />
       <classpath location="Test/src" />
-
       <test name="simpleCalculatorTests"
             haltonfailure="no" todir="Test">
         <formatter type="plain" />
