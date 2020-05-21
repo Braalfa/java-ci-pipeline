@@ -161,8 +161,11 @@
     <delete dir="${java-ci-pipeline.output.dir}"/>
     <delete dir="${java-ci-pipeline.testoutput.dir}"/>
   </target>
-  
-  
+
+
+  <target name="test" description="test">
+  </target>
+
   <!-- Module Main -->
   
   <dirname property="module.main.basedir" file="${ant.file}"/>
